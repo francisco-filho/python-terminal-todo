@@ -56,14 +56,6 @@ def colorir(texto):
     """
     return f"\033[92m{texto}\033[0m"
 
-def menu_inicial():
-    menu = """
---- O que você deseja fazer? digite a opção
-1 -> Nova tarefa
-2 -> Concluir tarefa
-    """
-    print (menu)
-
 
 if __name__ == "__main__":
     criar_tabela_todo(conn)    
