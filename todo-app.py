@@ -58,20 +58,31 @@ def colorir(texto):
 
 
 if __name__ == "__main__":
-    criar_tabela_todo(conn)    
+    criar_tabela_todo(conn)
+
+    NOVA_TAREFA     = 1
+    CONCLUIR_TAREFA = 2
+    MENU_INICIAL    = 99
+
     while True:
+        # sempre exibir as tarefas no início da interação
         exibir_tarefas()
         try:
+            # exibe as opções disponíveis
             opcao = int(input("O que deseja fazer? 1 = Nova tarefa, 2 = Concluir tarefa => "))
-            if opcao == 1:
+
+            # verifica qual opção o usuário escolheu
+            if opcao == NOVA_TAREFA:
+                # se opção 1 NOVA_TAREFA
                 texto_nova_tarefa = input("Descreva a Tarefa => ")
                 print ("adicionando tarefa -> " + str(texto_nova_tarefa))
-                if texto_nova_tarefa != "99":
+                if texto_nova_tarefa != str(MENU_INICIAL):
                     add_tarefa(texto_nova_tarefa)
-            elif opcao == 2:
+            elif opcao == CONCLUIR_TAREFA:
+                # se opção 2 CONCLUIR_TAREFA
                 cd_tarefa = int(input("Qual tarefa quer concluir? digite o código => "))
                 print ("Concluindo tarefa tarefa -> " + str(cd_tarefa))
-                if cd_tarefa != 99:
+                if cd_tarefa != MENU_INICIAL:
                     concluir_tarefa(cd_tarefa)
             else:
                 print ("Opção não reconhecida, por favor informa um número")    
