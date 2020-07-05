@@ -47,8 +47,7 @@ def exibir_tarefas():
     TAMANHO_TELA = 60
     print ("-" * TAMANHO_TELA)
     print ("{:^60}".format("TAREFAS"))
-    print ("-" * TAMANHO_TELA)
-    print ("{:^60}".format("tecle 99 para voltar ao menu inicial"))
+    
     print ("-" * TAMANHO_TELA)
     for tarefa in get_tarefas():
         check = u'\u2713' if tarefa[2] == 1 else ""
@@ -96,8 +95,13 @@ if __name__ == "__main__":
                 if cd_tarefa != MENU_INICIAL:
                     concluir_tarefa(cd_tarefa)
             else:
-                print ("Opção não reconhecida, por favor informa um número")    
+                print ("Opção não reconhecida, por favor informa um número") 
         except ValueError as e :
             print ("Opção não reconhecida, por favor informa um número")
         except Exception:
             exit(0)
+    
+        print ("-" * 60)
+        print ("{:^60}".format("tecle 99 para voltar ao menu inicial"))
+
+        
