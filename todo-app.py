@@ -1,11 +1,14 @@
 import sqlite3
 
+# conecta ao banco de dados 'todo-app'
+# caso o banco não exista ele será criado
 conn = sqlite3.connect("todo-app.db")
 
 def criar_tabela_todo(conn):
+    """  """
     cursor = conn.cursor()
     conn.execute("""
-    create table if not exists todo (
+    create table if not exists tarefa (
         cd_tarefa integer primary key autoincrement,
         tarefa text,
         concluido integer
@@ -14,21 +17,21 @@ def criar_tabela_todo(conn):
 
 def add_tarefa(tarefa):
     cursor = conn.cursor()
-    conn.execute("insert into todo (tarefa, concluido) values (?, 0)", (tarefa, ))
+    conn.execute("insert into tarefa (tarefa, concluido) values (?, 0)", (tarefa, ))
     conn.commit()
 
 def remover_tarefa(cd_tarefa):
     cursor = conn.cursor()
-    conn.execute("delete from todo where cd_tarefa = ?", (cd_tarefa, ))
+    conn.execute("delete from tarefa where cd_tarefa = ?", (cd_tarefa, ))
 
 def concluir_tarefa(cd_tarefa):
     cursor = conn.cursor()
-    conn.execute("update todo set concluido = 1 where cd_tarefa = ?", (cd_tarefa, ))
+    conn.execute("update tarefa set concluido = 1 where cd_tarefa = ?", (cd_tarefa, ))
     conn.commit()
 
 def get_tarefas():
     cursor = conn.cursor()
-    return conn.execute("select cd_tarefa, tarefa, concluido from todo")
+    return conn.execute("select cd_tarefa, tarefa, concluido from tarefa")
 
 def listar_tarefas():
     print ("--- Tarefas")
