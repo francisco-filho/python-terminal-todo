@@ -39,7 +39,8 @@ def get_tarefas():
     return conn.execute("select cd_tarefa, tarefa, concluido from tarefa")
 
 def exibir_tarefas():
-    print ("--- Tarefas")
+    print ("--- Tarefas ---")
+    print ("--- tecle 99 para voltar ao menu inicial ---")
     for tarefa in get_tarefas():
         t = f"- [{tarefa[0]}] {tarefa[1]}"
         if (tarefa[2] == 1):
@@ -63,36 +64,25 @@ def menu_inicial():
     """
     print (menu)
 
-def menu_nova_tarefa():
-    menu = """
---- Informe a descrição da tarefa ou 99 para voltar
-    """
-    print (menu)
-
-def menu_concluir_tarefa():
-    menu = """
---- Informe o código da tarefa que deseja CONCLUIR ou 99 para voltar
-    """
-    print (menu)    
 
 if __name__ == "__main__":
     criar_tabela_todo(conn)    
     while True:
         exibir_tarefas()
-        escolha = input("O que deseja fazer? 1 = Nova tarefa, 2 = Concluir tarefa => ")
         try:
-            escolha_int = int(escolha)
-           
-            if escolha_int == 1:
+            opcao = int(input("O que deseja fazer? 1 = Nova tarefa, 2 = Concluir tarefa => "))
+            if opcao == 1:
                 texto_nova_tarefa = input("Descreva a Tarefa => ")
                 print ("adicionando tarefa -> " + str(texto_nova_tarefa))
                 if texto_nova_tarefa != "99":
                     add_tarefa(texto_nova_tarefa)
-            elif escolha_int == 2:
+            elif opcao == 2:
                 cd_tarefa = int(input("Qual tarefa quer concluir? digite o código => "))
                 print ("Concluindo tarefa tarefa -> " + str(cd_tarefa))
                 if cd_tarefa != 99:
                     concluir_tarefa(cd_tarefa)
+            else:
+                print ("Opção não reconhecida, por favor informa um número")    
         except ValueError as e :
             print ("Opção não reconhecida, por favor informa um número")
         except Exception:
