@@ -4,6 +4,15 @@ import sqlite3
 # caso o banco não exista ele será criado
 conn = sqlite3.connect("todo-app.db")
 
+"""
+    sqlite3
+        - connect(arquivo)
+        - execute()
+        - cursor()
+        - commit()
+        - sql básico (select, insert, delete)
+"""
+
 def criar_tabela_todo(conn):
     """ cria a tabela 'tarefa' caso ela não exista """
     cursor = conn.cursor()
@@ -17,36 +26,38 @@ def criar_tabela_todo(conn):
 
 def add_tarefa(tarefa):
     """ adiciona uma nova tarefa """
-    cursor = conn.cursor()
     conn.execute("insert into tarefa (tarefa, concluido) values (?, 0)", (tarefa, ))
     conn.commit()
 
 def remover_tarefa(cd_tarefa):
     """ remove a tarefa da tabela """
-    cursor = conn.cursor()
     conn.execute("delete from tarefa where cd_tarefa = ?", (cd_tarefa, ))
     conn.commit()
 
 def concluir_tarefa(cd_tarefa):
     """ marca a tarefa como concluida """
-    cursor = conn.cursor()
     conn.execute("update tarefa set concluido = 1 where cd_tarefa = ?", (cd_tarefa, ))
     conn.commit()
 
-def get_tarefas():
+def get_tarefas(): # retorna um cursor
     """ retorna a lista de tarefas cadastras """
-    cursor = conn.cursor()
     return conn.execute("select cd_tarefa, tarefa, concluido from tarefa")
 
 def exibir_tarefas():
-    print ("--- Tarefas ---")
-    print ("--- tecle 99 para voltar ao menu inicial ---")
+    TAMANHO_TELA = 60
+    print ("-" * TAMANHO_TELA)
+    print ("{:^60}".format("TAREFAS"))
+    print ("-" * TAMANHO_TELA)
+    print ("{:^60}".format("tecle 99 para voltar ao menu inicial"))
+    print ("-" * TAMANHO_TELA)
     for tarefa in get_tarefas():
-        t = f"- [{tarefa[0]}] {tarefa[1]}"
+        check = u'\u2713' if tarefa[2] == 1 else ""
+        t = "- [{:>4}] {:<47} {:^3}".format(tarefa[0], tarefa[1], check)
         if (tarefa[2] == 1):
             print (colorir(t))
         else:
             print (t)
+    print ("-" * TAMANHO_TELA)
 
 def colorir(texto):
     """ 
