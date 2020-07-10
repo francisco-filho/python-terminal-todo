@@ -1,29 +1,40 @@
 import db
 
-def exibir_tarefas():
-    TAMANHO_TELA = 60
-    print ("-" * TAMANHO_TELA)
+def exibir_cabecalho():
+    """ imprimi o cabeçalho no terminal utilizando o tamanho maximo de 60 caracteres """
+    QTD_COLUNAS = 60
+    print ("-" * QTD_COLUNAS)
     print ("{:^60}".format("TAREFAS"))
-    print ("-" * TAMANHO_TELA)
-    print ("{:^60}".format("tecle 99 para voltar ao menu inicial"))
-    print ("-" * 60)
+    print ("-" * QTD_COLUNAS)
+    print ("{:^60}".format("tecle 99 volta para o menu inicial, [CTRL+C] sai"))
+    print ("-" * QTD_COLUNAS)
+
+def exibir_tarefas():    
+    """ exibe a lista de tarefas cadastradas, com algumas formatações básicas """
     for tarefa in db.get_tarefas():
+        # check = \u2713 é o caracter unicode que representa o concluido
         check = u'\u2713' if tarefa[2] == 1 else ""
+        """
+            os parametros passados para esse format() são o seguinte
+            {:>4}  = 4 posições, alinhado a direita
+            {:<47} = 47 posições, alinhado a esquerda
+            {:^3}  = 3 posições, centralizado
+        """
         t = "- [{:>4}] {:<47} {:^3}".format(tarefa[0], tarefa[1], check)
-        if (tarefa[2] == 1):
-            print (colorir(t))
-        else:
-            print (t)
+        print (t)
     print ("-" * 60)
 
-def colorir(texto):
-    """ 
-    Muda cor do terminal para verde
-    esses códigos de cores são para terminais linux
-    provavelmente não funcionará em Windows
-    """
-    return f"\033[92m{texto}\033[0m"
+def mostrar_opcao_nova_tarefa():
+    texto_nova_tarefa = input("Descreva a Tarefa => ")
+    print ("adicionando tarefa -> " + str(texto_nova_tarefa))
+    if texto_nova_tarefa != str(MENU_INICIAL):
+        db.add_tarefa(texto_nova_tarefa)    
 
+def mostrar_opcao_concluir_tarefa():
+    cd_tarefa = int(input("Qual tarefa quer concluir? digite o código => "))
+    print ("Concluindo tarefa tarefa -> " + str(cd_tarefa))
+    if cd_tarefa != MENU_INICIAL:
+        db.concluir_tarefa(cd_tarefa)
 
 if __name__ == "__main__":
     db.criar_tabela_todo()
@@ -33,7 +44,7 @@ if __name__ == "__main__":
     MENU_INICIAL    = 99
 
     while True:
-        # sempre exibir as tarefas no início da interação
+        exibir_cabecalho()
         exibir_tarefas()
         try:
             # exibe as opções disponíveis
@@ -42,16 +53,10 @@ if __name__ == "__main__":
             # verifica qual opção o usuário escolheu
             if opcao == NOVA_TAREFA:
                 # se opção 1 NOVA_TAREFA
-                texto_nova_tarefa = input("Descreva a Tarefa => ")
-                print ("adicionando tarefa -> " + str(texto_nova_tarefa))
-                if texto_nova_tarefa != str(MENU_INICIAL):
-                    db.add_tarefa(texto_nova_tarefa)
+                mostrar_opcao_nova_tarefa()
             elif opcao == CONCLUIR_TAREFA:
                 # se opção 2 CONCLUIR_TAREFA
-                cd_tarefa = int(input("Qual tarefa quer concluir? digite o código => "))
-                print ("Concluindo tarefa tarefa -> " + str(cd_tarefa))
-                if cd_tarefa != MENU_INICIAL:
-                    db.concluir_tarefa(cd_tarefa)
+                mostrar_opcao_concluir_tarefa()
             else:
                 print ("Opção não reconhecida, por favor informa um número")    
         except ValueError as e :
