@@ -1,3 +1,5 @@
+import db
+
 def exibir_tarefas():
     TAMANHO_TELA = 60
     print ("-" * TAMANHO_TELA)
@@ -5,7 +7,7 @@ def exibir_tarefas():
     print ("-" * TAMANHO_TELA)
     print ("{:^60}".format("tecle 99 para voltar ao menu inicial"))
     print ("-" * 60)
-    for tarefa in get_tarefas():
+    for tarefa in db.get_tarefas():
         check = u'\u2713' if tarefa[2] == 1 else ""
         t = "- [{:>4}] {:<47} {:^3}".format(tarefa[0], tarefa[1], check)
         if (tarefa[2] == 1):
@@ -24,7 +26,7 @@ def colorir(texto):
 
 
 if __name__ == "__main__":
-    criar_tabela_todo(conn)
+    db.criar_tabela_todo()
 
     NOVA_TAREFA     = 1
     CONCLUIR_TAREFA = 2
@@ -43,13 +45,13 @@ if __name__ == "__main__":
                 texto_nova_tarefa = input("Descreva a Tarefa => ")
                 print ("adicionando tarefa -> " + str(texto_nova_tarefa))
                 if texto_nova_tarefa != str(MENU_INICIAL):
-                    add_tarefa(texto_nova_tarefa)
+                    db.add_tarefa(texto_nova_tarefa)
             elif opcao == CONCLUIR_TAREFA:
                 # se opção 2 CONCLUIR_TAREFA
                 cd_tarefa = int(input("Qual tarefa quer concluir? digite o código => "))
                 print ("Concluindo tarefa tarefa -> " + str(cd_tarefa))
                 if cd_tarefa != MENU_INICIAL:
-                    concluir_tarefa(cd_tarefa)
+                    db.concluir_tarefa(cd_tarefa)
             else:
                 print ("Opção não reconhecida, por favor informa um número")    
         except ValueError as e :

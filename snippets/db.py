@@ -13,7 +13,7 @@ conn = sqlite3.connect("todo-app.db")
         - sql básico (select, insert, delete)
 """
 
-def criar_tabela_todo(conn):
+def criar_tabela_todo():
     """ cria a tabela 'tarefa' caso ela não exista """
     cursor = conn.cursor()
     conn.execute("""
