@@ -52,14 +52,12 @@ if __name__ == "__main__":
 
             # verifica qual opção o usuário escolheu
             if opcao == NOVA_TAREFA:
-                # se opção 1 NOVA_TAREFA
                 mostrar_opcao_nova_tarefa()
             elif opcao == CONCLUIR_TAREFA:
-                # se opção 2 CONCLUIR_TAREFA
                 mostrar_opcao_concluir_tarefa()
             else:
-                print ("Opção não reconhecida, por favor informa um número")    
+                print ("Opção não reconhecida, por favor informar um número")    
         except ValueError as e :
-            print ("Opção não reconhecida, por favor informa um número")
+            print ("Opção não reconhecida, por favor informar um número")
         except Exception:
             exit(0)
