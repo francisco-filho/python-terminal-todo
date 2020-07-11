@@ -16,6 +16,17 @@ Escolhemos o sqlite por que o python já tem suporte nativo ao mesmo e não é n
 
 > o sqlite é o banco utilizado nos celulares android e iPhone
 
+
+Os principais métodos do sqlite utilizados são `connect()`, `execute()` e `commit()`
+
+ `connect(path_arquivo)` retorna uma conexão com o banco de dados sqlite, que no nosso caso é o arquivo "todo-app.db" que está no diretório da aplicação.
+
+ `conn.execute(sql, tupla)` executa comandos sql utilizando a conexão ao banco. O primeiro argumento é o código sql e o segundo parametro (opcional) é uma tupla com as variáveis que serão usadas na consulta. Esse comando retornar um objeto `cursor` o qual podemos interar e ler os resultados da consulta.
+
+ `conn.commit()` comita as alterações realizadas no banco de dados
+
+ Nossa classe `db` ainda tem o método `criar_tabela_todo()` que cria a tabela no nosso banco de dados caso ela ainda não exista.
+
 Vamos criar um módulo python que conterá a funcionalidade de acesso ao banco de dados, nomei o arquivo `db.py` e digite o seguinte conteudo:
 
 ```python
@@ -57,17 +68,20 @@ def get_tarefas(): # retorna um cursor
 
 ```
 
-Os principais métodos do sqlite utilizados são `connect()`, `execute()` e `commit()`
-
- `connect(path_arquivo)` retorna uma conexão com o banco de dados sqlite, que no nosso caso é o arquivo "todo-app.db" que está no diretório da aplicação.
-
- `conn.execute(sql, tupla)` executa comandos sql utilizando a conexão ao banco. O primeiro argumento é o código sql e o segundo parametro (opcional) é uma tupla com as variáveis que serão usadas na consulta. Esse comando retornar um objeto `cursor` o qual podemos interar e ler os resultados da consulta.
-
- `conn.commit()` comita as alterações realizadas no banco de dados
-
- Nossa classe `db` ainda tem o método `criar_tabela_todo()` que cria a tabela no nosso banco de dados caso ela ainda não exista.
-
  Agora é hora de criarmos a aplicação de tarefas:
+
+ 
+A primeira vista esta classe parece complexa, mas o que ela mais faz é imprimir as informações na tela. Utilizamos dois me´todos para isso:
+
+ `exibir_cabecalho()` exibe o nome do app com informações básicas
+ `exibir_tarefas()` exibe a lista de tarefas cadastradas no sistema
+
+ Logo depois temos os métodos utilizados para interação com o usuário:
+
+ `mostrar_opcao_nova_tarefa()` O sistema mostra a opção perguntndo ao usuário o que ele deseja fazer, as duas opções disponíveis são **incluir uma nova tarefa** ou **concluir uma tarefa**. Caso o usuário selecione **incluir** a perguntará a descrição da tarefa que ele quer cadastrar. Mas se ele selecionar a opção de conclusão, o método explicado abaixo será chamado.
+ `mostrar_opcao_concluir_tarefa()` Nessa opção o sistema pergunta ao usuário o código da tarefa que ele deseja concluir, quando o usuário informa, o sistema marca a atividade como concluida e o ciclo começa novamente.
+
+
 
  ```python
 import db
@@ -108,6 +122,16 @@ def mostrar_opcao_concluir_tarefa():
     if cd_tarefa != MENU_INICIAL:
         db.concluir_tarefa(cd_tarefa)
 
+## continua        
+```
+
+E finalmente chegamos ao método `main()` que controla o fluxo do programa. Nele criamos um loop infinito onde:
+
+- exibimos o cabeçalho e tarefas
+- solicitamos a interação do usuário
+- e depois repetimos tudo de novo
+
+```python
 def main():
     NOVA_TAREFA     = 1
     CONCLUIR_TAREFA = 2
@@ -138,19 +162,6 @@ if __name__ == "__main__":
     main()
  ```
 
-A primeira vista esta classe parece complexa, mas o que ela mais faz é imprimir as informações na tela. Utilizamos dois me´todos para isso:
+## Referências
 
- `exibir_cabecalho()` exibe o nome do app com informações básicas
- `exibir_tarefas()` exibe a lista de tarefas cadastradas no sistema
-
- Logo depois temos os métodos utilizados para interação com o usuário:
-
- `mostrar_opcao_nova_tarefa()` O sistema mostra a opção perguntndo ao usuário o que ele deseja fazer, as duas opções disponíveis são **incluir uma nova tarefa** ou **concluir uma tarefa**. Caso o usuário selecione **incluir** a perguntará a descrição da tarefa que ele quer cadastrar. Mas se ele selecionar a opção de conclusão, o método explicado abaixo será chamado.
- `mostrar_opcao_concluir_tarefa()` Nessa opção o sistema pergunta ao usuário o código da tarefa que ele deseja concluir, quando o usuário informa, o sistema marca a atividade como concluida e o ciclo começa novamente.
-
-E finalmente chegamos ao método `main()` que controla o fluxo do programa. Nele criamos um loop infinito onde:
-
-- exibimos o cabeçalho e tarefas
-- solicitamos a interação do usuário
-- e depois repetimos tudo de novo
-
+- Documentação sqlite
