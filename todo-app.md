@@ -16,6 +16,7 @@ Escolhemos o sqlite por que o python já tem suporte nativo ao mesmo e não é n
 
 > o sqlite é o banco utilizado nos celulares android e iPhone
 
+## Implementação
 
 Os principais métodos do sqlite utilizados são `connect()`, `execute()` e `commit()`
 
