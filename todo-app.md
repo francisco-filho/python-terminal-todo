@@ -78,10 +78,12 @@ Agora é hora de criarmos a aplicação de tarefas. A primeira vista esta este c
  `mostrar_opcao_nova_tarefa()` O sistema mostra a opção perguntndo ao usuário o que ele deseja fazer, as duas opções disponíveis são **incluir uma nova tarefa** ou **concluir uma tarefa**. Caso o usuário selecione **incluir** a perguntará a descrição da tarefa que ele quer cadastrar. Mas se ele selecionar a opção de conclusão, o método explicado abaixo será chamado.
  `mostrar_opcao_concluir_tarefa()` Nessa opção o sistema pergunta ao usuário o código da tarefa que ele deseja concluir, quando o usuário informa, o sistema marca a atividade como concluida e o ciclo começa novamente.
 
-
+Segue abaixo o arquivo `mensagens.py`
 
  ```python
 import db
+
+MENU_INICIAL = 99
 
 def exibir_cabecalho():
     """ imprimi o cabeçalho no terminal utilizando o tamanho maximo de 60 caracteres """
@@ -129,23 +131,25 @@ E finalmente chegamos ao método `main()` que controla o fluxo do programa. Nele
 - e depois repetimos tudo de novo
 
 ```python
+import db
+import mensagens as msg
+
 def main():
     NOVA_TAREFA     = 1
     CONCLUIR_TAREFA = 2
-    MENU_INICIAL    = 99
-
+    
     while True:
-        exibir_cabecalho()
-        exibir_tarefas()
+        msg.exibir_cabecalho()
+        msg.exibir_tarefas()
         try:
             # exibe as opções disponíveis
             opcao = int(input("O que deseja fazer? 1 = Nova tarefa, 2 = Concluir tarefa => "))
 
             # verifica qual opção o usuário escolheu
             if opcao == NOVA_TAREFA:
-                mostrar_opcao_nova_tarefa()
+                msg.mostrar_opcao_nova_tarefa()
             elif opcao == CONCLUIR_TAREFA:
-                mostrar_opcao_concluir_tarefa()
+                msg.mostrar_opcao_concluir_tarefa()
             else:
                 print ("Opção não reconhecida, por favor informar um número")    
         except ValueError as e :
