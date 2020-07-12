@@ -4,15 +4,6 @@ import sqlite3
 # caso o banco não exista ele será criado
 conn = sqlite3.connect("todo-app.db")
 
-"""
-    sqlite3
-        - connect(arquivo)
-        - execute()
-        - cursor()
-        - commit()
-        - sql básico (select, insert, delete)
-"""
-
 def criar_tabela_todo():
     """ cria a tabela 'tarefa' caso ela não exista """
     cursor = conn.cursor()
