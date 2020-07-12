@@ -68,10 +68,7 @@ def get_tarefas(): # retorna um cursor
 
 ```
 
- Agora é hora de criarmos a aplicação de tarefas:
-
- 
-A primeira vista esta classe parece complexa, mas o que ela mais faz é imprimir as informações na tela. Utilizamos dois me´todos para isso:
+Agora é hora de criarmos a aplicação de tarefas. A primeira vista esta este código parece complexo, mas o que ela mais faz é imprimir as informações na tela. Utilizamos dois me´todos para isso:
 
  `exibir_cabecalho()` exibe o nome do app com informações básicas
  `exibir_tarefas()` exibe a lista de tarefas cadastradas no sistema
@@ -164,4 +161,4 @@ if __name__ == "__main__":
 
 ## Referências
 
-- Documentação sqlite
+[Documentação sqlite](https://www.sqlite.org/docs.html)
